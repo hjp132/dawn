@@ -1,0 +1,307 @@
+<!-- templates/product.liquid -->
+<div class="product-container" x-data="productPage()">
+  <!-- Product Images with Vertical Carousel -->
+  <div class="product-images">
+    <div class="image-carousel" :style="`transform: translateY(-${currentImage * 100}%)`">
+      {% for image in product.images %}
+        <div class="product-image">
+          <img src="{{ image | img_url: '800x' }}" alt="{{ image.alt | escape }}" loading="lazy">
+        </div>
+      {% endfor %}
+    </div>
+    
+    <!-- Vertical Carousel Indicators -->
+    <div class="carousel-indicators mobile-only">
+      {% for image in product.images %}
+        <div 
+          class="indicator" 
+          :class="{ 'active': {{ forloop.index0 }} === currentImage }"
+          @click="currentImage = {{ forloop.index0 }}"
+        ></div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Desktop Product Info (unchanged) -->
+  <div class="desktop-product-info desktop-only">
+    <div class="product-details">
+      <h1>{{ product.title | upcase }}</h1>
+      <div class="price">{{ product.price | money }}</div>
+      
+      <!-- Variant Selector -->
+      <form action="/cart/add" method="post" enctype="multipart/form-data" @submit.prevent="addToCart($event)">
+        {% unless product.has_only_default_variant %}
+          <div class="size-selector">
+            {% for option in product.options_with_values %}
+              {% if option.name == 'Size' %}
+                {% for value in option.values %}
+                  <div 
+                    class="size-option" 
+                    :class="{ 'selected': selectedVariant && selectedVariant.option1 === '{{ value }}' }"
+                    @click="selectVariant('{{ value }}')"
+                  >
+                    {{ value }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          </div>
+          
+          <select name="id" x-model="selectedVariantId" style="display: none;">
+            {% for variant in product.variants %}
+              <option value="{{ variant.id }}" {% unless variant.available %}disabled{% endunless %}>
+                {{ variant.title }}
+              </option>
+            {% endfor %}
+          </select>
+        {% else %}
+          <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+        {% endunless %}
+
+        <button 
+          class="add-to-cart-btn" 
+          type="submit"
+          :disabled="!selectedVariant || !selectedVariant.available"
+        >
+          <span x-show="selectedVariant && selectedVariant.available">ADD TO CART</span>
+          <span x-show="!selectedVariant">SELECT SIZE</span>
+          <span x-show="selectedVariant && !selectedVariant.available">SOLD OUT</span>
+        </button>
+      </form>
+
+      <!-- Desktop Accordion Sections -->
+      <div class="footer-section">
+        <div class="section-header" @click="toggleSection('description')">
+          <span>DESCRIPTION</span>
+          <span x-text="openSection === 'description' ? '−' : '+'"></span>
+        </div>
+        <div class="section-content" :class="{ 'active': openSection === 'description' }">
+          {{ product.description }}
+        </div>
+      </div>
+
+      {% if product.metafields.custom.details %}
+        <div class="footer-section">
+          <div class="section-header" @click="toggleSection('details')">
+            <span>DETAILS</span>
+            <span x-text="openSection === 'details' ? '−' : '+'"></span>
+          </div>
+          <div class="section-content" :class="{ 'active': openSection === 'details' }">
+            {{ product.metafields.custom.details }}
+          </div>
+        </div>
+      {% endif %}
+
+      {% if product.metafields.custom.size_guide %}
+        <div class="footer-section">
+          <div class="section-header" @click="toggleSection('size')">
+            <span>SIZE GUIDE</span>
+            <span x-text="openSection === 'size' ? '−' : '+'"></span>
+          </div>
+          <div class="section-content" :class="{ 'active': openSection === 'size' }">
+            {{ product.metafields.custom.size_guide }}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Mobile Sticky Product Details (Above Footer) -->
+<div class="mobile-product-details mobile-only" x-data="{ detailsExpanded: false, startY: 0, currentY: 0 }">
+  <!-- Pull-up Handle -->
+  <div class="pull-handle" 
+       @touchstart="startY = $event.touches[0].clientY" 
+       @touchmove="currentY = $event.touches[0].clientY"
+       @touchend="if(startY - currentY > 50) detailsExpanded = true; else if(currentY - startY > 50) detailsExpanded = false"
+       @click="detailsExpanded = !detailsExpanded">
+    <div class="handle-line"></div>
+  </div>
+  
+  <!-- Product Info Preview -->
+  <div class="product-info-preview">
+    <div class="product-summary">
+      <h1>{{ product.title | upcase }}</h1>
+      <div class="price">{{ product.price | money }}</div>
+    </div>
+    
+    <form class="form-cont" action="/cart/add" method="post" enctype="multipart/form-data" @submit.prevent="addToCart($event)">
+      {% unless product.has_only_default_variant %}
+        <select name="id" x-model="selectedVariantId" style="display: none;">
+          {% for variant in product.variants %}
+            <option value="{{ variant.id }}" {% unless variant.available %}disabled{% endunless %}>
+              {{ variant.title }}
+            </option>
+          {% endfor %}
+        </select>
+      {% else %}
+        <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+      {% endunless %}
+
+      <button 
+        class="add-to-cart-btn mobile-add-cart" 
+        type="submit"
+        :disabled="!selectedVariant || !selectedVariant.available"
+      >
+        ADD TO CART
+      </button>
+    </form>
+  </div>
+  
+  <!-- Expandable Details -->
+  <div class="expandable-details" :class="{ 'expanded': detailsExpanded }">
+    <!-- Size Selector -->
+    {% unless product.has_only_default_variant %}
+      <div class="size-selector-mobile">
+        <h3>SELECT SIZE</h3>
+        <div class="size-options">
+          {% for option in product.options_with_values %}
+            {% if option.name == 'Size' %}
+              {% for value in option.values %}
+                <div 
+                  class="size-option" 
+                  :class="{ 'selected': selectedVariant && selectedVariant.option1 === '{{ value }}' }"
+                  @click="selectVariant('{{ value }}')"
+                >
+                  {{ value }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    {% endunless %}
+
+    <!-- Mobile Accordion Sections -->
+    <div x-data="{ openMobileSection: null }">
+      <div class="footer-section">
+        <div class="section-header" @click="openMobileSection = openMobileSection === 'description' ? null : 'description'">
+          <span>DESCRIPTION</span>
+          <span x-text="openMobileSection === 'description' ? '−' : '+'"></span>
+        </div>
+        <div class="section-content" :class="{ 'active': openMobileSection === 'description' }">
+          {{ product.description }}
+        </div>
+      </div>
+
+      {% if product.metafields.custom.details %}
+        <div class="footer-section">
+          <div class="section-header" @click="openMobileSection = openMobileSection === 'details' ? null : 'details'">
+            <span>DETAILS</span>
+            <span x-text="openMobileSection === 'details' ? '−' : '+'"></span>
+          </div>
+          <div class="section-content" :class="{ 'active': openMobileSection === 'details' }">
+            {{ product.metafields.custom.details }}
+          </div>
+        </div>
+      {% endif %}
+
+      {% if product.metafields.custom.size_guide %}
+        <div class="footer-section">
+          <div class="section-header" @click="openMobileSection = openMobileSection === 'size' ? null : 'size'">
+            <span>SIZE GUIDE</span>
+            <span x-text="openMobileSection === 'size' ? '−' : '+'"></span>
+          </div>
+          <div class="section-content" :class="{ 'active': openMobileSection === 'size' }">
+            {{ product.metafields.custom.size_guide }}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  function productPage() {
+    return {
+      currentImage: 0,
+      selectedVariant: null,
+      selectedVariantId: null,
+      openSection: null,
+      variants: {{ product.variants | json }},
+      
+      init() {
+        if (this.variants.length === 1) {
+          this.selectedVariant = this.variants[0];
+          this.selectedVariantId = this.variants[0].id;
+        }
+      },
+      
+      selectVariant(optionValue) {
+        this.selectedVariant = this.variants.find(variant => 
+          variant.option1 === optionValue
+        );
+        if (this.selectedVariant) {
+          this.selectedVariantId = this.selectedVariant.id;
+        }
+      },
+      
+      toggleSection(section) {
+        this.openSection = this.openSection === section ? null : section;
+      },
+      
+      async addToCart(event) {
+        event.preventDefault();
+        
+        if (!this.selectedVariant || !this.selectedVariant.available) {
+          alert('Please select an available size');
+          return;
+        }
+
+        try {
+          const response = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              id: this.selectedVariantId,
+              quantity: 1
+            })
+          });
+
+          if (response.ok) {
+            window.location.href = '/cart';
+          } else {
+            throw new Error('Failed to add to cart');
+          }
+        } catch (error) {
+          console.error('Error adding to cart:', error);
+          alert('Error adding to cart. Please try again.');
+        }
+      }
+    }
+  }
+
+  // Vertical swipe functionality for mobile carousel
+  let startY = 0;
+  let currentY = 0;
+
+  document.addEventListener('touchstart', (e) => {
+    if (e.target.closest('.product-images')) {
+      startY = e.touches[0].clientY;
+    }
+  });
+
+  document.addEventListener('touchend', (e) => {
+    if (e.target.closest('.product-images')) {
+      currentY = e.changedTouches[0].clientY;
+      
+      if (Math.abs(startY - currentY) > 50) {
+        const productPageEl = document.querySelector('[x-data*="productPage"]');
+        if (productPageEl && productPageEl._x_dataStack) {
+          const component = productPageEl._x_dataStack[0];
+          const imageCount = {{ product.images.size }};
+          
+          if (startY > currentY) {
+            // Swipe up - next image
+            component.currentImage = Math.min(imageCount - 1, component.currentImage + 1);
+          } else {
+            // Swipe down - previous image  
+            component.currentImage = Math.max(0, component.currentImage - 1);
+          }
+        }
+      }
+    }
+  });
+</script>

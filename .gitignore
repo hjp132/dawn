@@ -1,133 +1,133 @@
 # Shopify Theme .gitignore
 
 # Dependencies
-/my-theme/node_modules/
-/my-theme/npm-debug.log*
-/my-theme/yarn-debug.log*
-/my-theme/yarn-error.log*
-/my-theme/pnpm-debug.log*
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
 # Build outputs (compiled assets)
 # Comment out if you want to track built files
-/my-theme/assets/main.css
-/my-theme/assets/main.js
-/my-theme/assets/styles.css
-/my-theme/dist/
+assets/main.css
+assets/main.js
+assets/styles.css
+dist/
 
 # Environment variables
-/my-theme/.env
-/my-theme/.env.local
-/my-theme/.env.development.local
-/my-theme/.env.test.local
-/my-theme/.env.production.local
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # Shopify CLI
-/my-theme/.shopify/
+.shopify/
 
 # IDE/Editor files
-/my-theme/.vscode/
-/my-theme/.idea/
-/my-theme/*.swp
-/my-theme/*.swo
-/my-theme/*~
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
 # OS generated files
-/my-theme/.DS_Store
-/my-theme/.DS_Store?
-/my-theme/._*
-/my-theme/.Spotlight-V100
-/my-theme/.Trashes
-/my-theme/ehthumbs.db
-/my-theme/Thumbs.db
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
 # Logs
-/my-theme/logs
-/my-theme/*.log
+logs
+*.log
 
 # Runtime data
-/my-theme/pids
-/my-theme/*.pid
-/my-theme/*.seed
-/my-theme/*.pid.lock
+pids
+*.pid
+*.seed
+*.pid.lock
 
 # Coverage directory used by tools like istanbul
-/my-theme/coverage/
-/my-theme/*.lcov
+coverage/
+*.lcov
 
 # nyc test coverage
-/my-theme/.nyc_output
+.nyc_output
 
 # Dependency directories
-/my-theme/jspm_packages/
+jspm_packages/
 
 # Optional npm cache directory
-/my-theme/.npm
+.npm
 
 # Optional REPL history
-/my-theme/.node_repl_history
+.node_repl_history
 
 # Output of 'npm pack'
-/my-theme/*.tgz
+*.tgz
 
 # Yarn Integrity file
-/my-theme/.yarn-integrity
+.yarn-integrity
 
 # parcel-bundler cache (https://parceljs.org/)
-/my-theme/.cache
-/my-theme/.parcel-cache
+.cache
+.parcel-cache
 
 # next.js build output
-/my-theme/.next
+.next
 
 # nuxt.js build output
-/my-theme/.nuxt
+.nuxt
 
 # vuepress build output
-/my-theme/.vuepress/dist
+.vuepress/dist
 
 # Serverless directories
-/my-theme/.serverless
+.serverless
 
 # FuseBox cache
-/my-theme/.fusebox/
+.fusebox/
 
 # DynamoDB Local files
-/my-theme/.dynamodb/
+.dynamodb/
 
 # TernJS port file
-/my-theme/.tern-port
+.tern-port
 
 # Temporary folders
-/my-theme/tmp/
-/my-theme/temp/
+tmp/
+temp/
 
 # Build artifacts
-/my-theme/build/
-/my-theme/dist/
+build/
+dist/
 
 # TypeScript cache
-/my-theme/*.tsbuildinfo
+*.tsbuildinfo
 
 # Sass cache
-/my-theme/.sass-cache/
+.sass-cache/
 
 # Vite
-/my-theme/.vite/
+.vite/
 
 # Local Netlify folder
-/my-theme/.netlify
+.netlify
 
 # Shopify theme development
-/my-theme/config/settings_data.json
+config/settings_data.json
 
 # Backup files
-/my-theme/*.backup
-/my-theme/*.bak
+*.backup
+*.bak
 
 # Archive files
-/my-theme/*.zip
-/my-theme/*.tar.gz
-/my-theme/*.rar
+*.zip
+*.tar.gz
+*.rar
 
 # Local configuration files
-/my-theme/.shopifyignore
+.shopifyignore

@@ -1,0 +1,581 @@
+/* Updated CSS for Golf le Fleur Mobile Layout */
+
+/* Variables */
+$primary-color: #000;
+$secondary-color: #666;
+$white: #fff;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 2rem;
+$mobile: 768px;
+$tablet: 1024px;
+$desktop: 1200px;
+$background-color: #fffaed;
+$accent-color: #87ceeb;
+
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: $background-color;
+  overflow-x: hidden;
+  color: $primary-color;
+  padding-bottom: 60px; // Space for mobile footer
+  
+  @media (min-width: $mobile) {
+    padding-bottom: 0;
+  }
+}
+
+/* Updated Header */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 1rem;
+  background: $background-color;
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+}
+
+/* Mobile Header - Only Logo */
+.mobile-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  @media (min-width: $mobile) {
+    display: none;
+  }
+}
+
+/* Desktop Header - Full Header */
+.desktop-header {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  
+  @media (min-width: $mobile) {
+    display: flex;
+  }
+}
+
+.menu-btn, .cart-btn {
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.logo {
+  font-style: italic;
+  font-weight: bold;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  
+  .logo-img {
+    max-height: 100px;
+    width: auto;
+    display: block;
+  }
+  
+  .logo-text {
+    font-style: italic;
+    font-weight: bold;
+  }
+}
+
+/* Mobile Footer */
+.mobile-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 90;
+  background: $background-color;
+  display: flex;
+  padding: 0.8rem 1rem;
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+}
+
+.footer-menu-btn, .footer-cart-btn {
+  background: none;
+  border: none;
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0.5rem;
+}
+
+.footer-logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  
+  .footer-logo-img {
+    height: 30px;
+    width: auto;
+  }
+  
+  .footer-icon {
+    font-size: 1.5rem;
+  }
+}
+
+/* Product Container */
+.product-container {
+  margin-top: 60px;
+  margin-bottom: 200px; // Space for mobile product details
+  
+  @media (min-width: $mobile) {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 80px auto 0;
+    padding: 2rem;
+  }
+}
+
+/* Updated Product Images - Vertical Carousel */
+.product-images {
+  position: relative;
+  height: calc(100vh - 260px); // Account for header and mobile product details
+  overflow: hidden;
+  
+  @media (min-width: $mobile) {
+    height: auto;
+    min-height: 600px;
+  }
+}
+
+.image-carousel {
+  display: flex;
+  flex-direction: column; // Changed to vertical
+  height: 100%;
+  transition: transform 0.3s ease;
+  
+  @media (min-width: $mobile) {
+    flex-direction: row; // Desktop keeps horizontal
+  }
+}
+
+.product-image {
+  flex: 0 0 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    z-index: 20;
+  }
+}
+
+/* Updated Carousel Indicators - Vertical */
+.carousel-indicators {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.indicator {
+  width: .375rem;
+  height: .375rem;
+  border-radius: 50%;
+  background-color: none;
+  border: 1px solid #000;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 5px 0;
+  
+  &.active {
+    background-color: $primary-color;
+    transform: scale(1.2);
+  }
+}
+
+/* Mobile Product Details - Sticky Above Footer */
+.mobile-product-details {
+  position: fixed;
+  bottom: 60px; // Above mobile footer
+  left: 0;
+  right: 0;
+  z-index: 80;
+  border-radius: 12px 12px 0 0;
+  transition: all 0.3s ease;
+}
+
+.pull-handle {
+  display: flex;
+  justify-content: center;
+  padding: 0.8rem;
+  cursor: pointer;
+  background: none;
+  
+  .handle-line {
+    width: 35px;
+    height: 4px;
+    background-color: #000;
+    border-radius: 2px;
+  }
+}
+
+.product-info-preview {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;;
+  background: $background-color;
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 0.3125rem 0.625rem 0 #000;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.product-summary {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 20px;
+  padding-top: 20px;
+  
+  h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
+    line-height: 1.2;
+  }
+  
+  .price {
+    font-size: 1.25rem;
+    font-weight: 400;
+  }
+}
+
+.form-cont {
+  width: 100%;
+  padding: 0 20px;
+}
+
+.mobile-add-cart {
+  background: $accent-color;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+/* Expandable Details */
+.expandable-details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background: $background-color;
+  
+  &.expanded {
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+}
+
+.size-selector-mobile {
+  padding: 1rem;
+  border-top: 1px solid #eee;
+  
+  h3 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+  }
+  
+  .size-options {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+}
+
+/* Size Options */
+.size-option {
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  
+  &.selected {
+    background: $primary-color;
+    color: $white;
+    border-color: $primary-color;
+  }
+  
+  &:hover {
+    border-color: $primary-color;
+  }
+}
+
+/* Footer Sections in Mobile */
+.footer-section {
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  margin: 0 20px;
+  background-color: $background-color;
+}
+
+.section-header {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+  
+  &:hover {
+    background-color: $background-color;
+  }
+}
+
+.section-content {
+  padding: 0 1rem 1rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  display: none;
+  
+  &.active {
+    display: block;
+  }
+}
+
+/* Desktop Product Info */
+.desktop-product-info {
+  display: none;
+  
+  @media (min-width: $mobile) {
+    display: block;
+  }
+}
+
+.product-details {
+  h1 {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    color: $accent-color;
+  }
+  
+  .price {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+  }
+}
+
+.size-selector {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem 0;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.add-to-cart-btn {
+  background: $accent-color;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+  margin-bottom: 2rem;
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+/* Desktop Section Content */
+@media (min-width: $mobile) {
+  .section-content {
+    display: block;
+    padding: 1rem 0;
+  }
+}
+
+/* Mobile/Desktop visibility helpers */
+.mobile-only {
+  display: block;
+  
+  @media (min-width: $mobile) {
+    display: none;
+  }
+}
+
+.desktop-only {
+  display: none;
+  
+  @media (min-width: $mobile) {
+    display: block;
+  }
+}
+
+/* Menu and Cart Overlays */
+.menu-overlay, .cart-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-menu, .cart-drawer {
+  background: $white;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.close-menu, .close-cart {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  float: right;
+}
+
+.menu-link {
+  display: block;
+  padding: 1rem 0;
+  text-decoration: none;
+  color: $primary-color;
+  border-bottom: 1px solid #eee;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  
+  &:hover {
+    color: $accent-color;
+  }
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.cart-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #eee;
+  
+  .cart-item-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+  }
+  
+  .cart-item-details {
+    flex: 1;
+    
+    h4 {
+      margin-bottom: 0.5rem;
+    }
+  }
+  
+  .remove-item {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+}
+
+.cart-footer {
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.cart-total {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.checkout-btn {
+  background: $primary-color;
+  color: $white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+}

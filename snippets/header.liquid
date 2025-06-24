@@ -1,0 +1,14 @@
+<header class="header">
+
+  <div class="logo">
+    {% if settings.logo %}
+      <a href="{{ routes.root_url }}">
+        <img src="{{ settings.logo | img_url: '150x' }}" alt="{{ shop.name }}" class="logo-img">
+      </a>
+    {% else %}
+      <a href="{{ routes.root_url }}" class="logo-text">
+        {{ shop.name }}
+      </a>
+    {% endif %}
+  </div>
+</header>
