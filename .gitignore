@@ -1,10 +1,133 @@
-# OS generated files #
-######################
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-.shopify
+# Shopify Theme .gitignore
+
+# Dependencies
+/my-theme/node_modules/
+/my-theme/npm-debug.log*
+/my-theme/yarn-debug.log*
+/my-theme/yarn-error.log*
+/my-theme/pnpm-debug.log*
+
+# Build outputs (compiled assets)
+# Comment out if you want to track built files
+/my-theme/assets/main.css
+/my-theme/assets/main.js
+/my-theme/assets/styles.css
+/my-theme/dist/
+
+# Environment variables
+/my-theme/.env
+/my-theme/.env.local
+/my-theme/.env.development.local
+/my-theme/.env.test.local
+/my-theme/.env.production.local
+
+# Shopify CLI
+/my-theme/.shopify/
+
+# IDE/Editor files
+/my-theme/.vscode/
+/my-theme/.idea/
+/my-theme/*.swp
+/my-theme/*.swo
+/my-theme/*~
+
+# OS generated files
+/my-theme/.DS_Store
+/my-theme/.DS_Store?
+/my-theme/._*
+/my-theme/.Spotlight-V100
+/my-theme/.Trashes
+/my-theme/ehthumbs.db
+/my-theme/Thumbs.db
+
+# Logs
+/my-theme/logs
+/my-theme/*.log
+
+# Runtime data
+/my-theme/pids
+/my-theme/*.pid
+/my-theme/*.seed
+/my-theme/*.pid.lock
+
+# Coverage directory used by tools like istanbul
+/my-theme/coverage/
+/my-theme/*.lcov
+
+# nyc test coverage
+/my-theme/.nyc_output
+
+# Dependency directories
+/my-theme/jspm_packages/
+
+# Optional npm cache directory
+/my-theme/.npm
+
+# Optional REPL history
+/my-theme/.node_repl_history
+
+# Output of 'npm pack'
+/my-theme/*.tgz
+
+# Yarn Integrity file
+/my-theme/.yarn-integrity
+
+# parcel-bundler cache (https://parceljs.org/)
+/my-theme/.cache
+/my-theme/.parcel-cache
+
+# next.js build output
+/my-theme/.next
+
+# nuxt.js build output
+/my-theme/.nuxt
+
+# vuepress build output
+/my-theme/.vuepress/dist
+
+# Serverless directories
+/my-theme/.serverless
+
+# FuseBox cache
+/my-theme/.fusebox/
+
+# DynamoDB Local files
+/my-theme/.dynamodb/
+
+# TernJS port file
+/my-theme/.tern-port
+
+# Temporary folders
+/my-theme/tmp/
+/my-theme/temp/
+
+# Build artifacts
+/my-theme/build/
+/my-theme/dist/
+
+# TypeScript cache
+/my-theme/*.tsbuildinfo
+
+# Sass cache
+/my-theme/.sass-cache/
+
+# Vite
+/my-theme/.vite/
+
+# Local Netlify folder
+/my-theme/.netlify
+
+# Shopify theme development
+/my-theme/config/settings_data.json
+
+# Backup files
+/my-theme/*.backup
+/my-theme/*.bak
+
+# Archive files
+/my-theme/*.zip
+/my-theme/*.tar.gz
+/my-theme/*.rar
+
+# Local configuration files
+/my-theme/.shopifyignore
